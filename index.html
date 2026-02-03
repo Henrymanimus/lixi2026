@@ -3,8 +3,8 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Săn Vé Trúng Thưởng</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Lì Xì Tết 2025 (Responsive)</title>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
         :root {
@@ -15,15 +15,8 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            /*background-color: var(--dark);
-            padding: 0;
-            overflow: hidden;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;*/
-            background-image: url('bgtet.jpg');
-
             /* Giúp ảnh tràn màn hình đẹp hơn */
+            background-image: url('bgtet.jpg');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -34,63 +27,33 @@
             height: 100vh;
             display: flex;
             flex-direction: column;
+            /* Ngăn chặn zoom trên mobile khi tap nhanh */
+            touch-action: manipulation;
         }
 
-        header {
-            text-align: center;
-            padding: 10px;
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            z-index: 100;
-            user-select: none;
-            position: relative;
-        }
-
-        h1 {
-            margin: 0;
-            font-size: 1.5rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        /* --- Nút Bật/Tắt Nhạc --- */
-        #music-toggle {
-            position: absolute;
-            top: 10px;
-            right: 20px;
-            background: rgba(0, 0, 0, 0.5);
-            color: white;
-            border: 1px solid white;
-            border-radius: 50%;
-            width: 35px;
-            height: 35px;
-            cursor: pointer;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 18px;
-            z-index: 200;
-        }
-
-        /* --- Welcome Screen (Để kích hoạt nhạc) --- */
+        /* --- Màn hình Chào --- */
         #welcome-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, var(--dark), #1a252f);
+            background: linear-gradient(135deg, #2c3e50, #000);
             z-index: 5000;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             color: white;
+            text-align: center;
+            padding: 20px;
+            box-sizing: border-box;
         }
 
         .start-btn {
             padding: 15px 40px;
             font-size: 20px;
+            margin-top: 20px;
             background: var(--primary-color);
             color: white;
             border: none;
@@ -98,7 +61,6 @@
             cursor: pointer;
             box-shadow: 0 0 20px var(--primary-color);
             animation: pulse 1.5s infinite;
-            margin-top: 20px;
             font-weight: bold;
         }
 
@@ -116,121 +78,41 @@
             }
         }
 
-        /* --- UI Elements --- */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.85);
-            display: none;
+        /* --- Header --- */
+        header {
+            text-align: center;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            z-index: 100;
+            user-select: none;
+            position: relative;
+            flex-shrink: 0;
+            /* Không bị co lại */
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 1.4rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--gold);
+        }
+
+        #music-toggle {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: 1px solid white;
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            cursor: pointer;
+            display: flex;
             justify-content: center;
             align-items: center;
-            z-index: 2000;
-        }
-
-        .box {
-            background: white;
-            padding: 25px;
-            border-radius: 12px;
-            width: 320px;
-            text-align: center;
-            box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);
-            animation: popIn 0.3s ease;
-        }
-
-        @keyframes popIn {
-            from {
-                transform: scale(0.8);
-                opacity: 0;
-            }
-
-            to {
-                transform: scale(1);
-                opacity: 1;
-            }
-        }
-
-        input {
-            width: 100%;
-            padding: 12px;
-            margin: 10px 0;
-            border: 2px solid #ddd;
-            border-radius: 6px;
-            box-sizing: border-box;
-            font-size: 16px;
-            outline: none;
-        }
-
-        input:focus {
-            border-color: var(--primary-color);
-        }
-
-        button.btn-primary {
-            padding: 12px 20px;
-            cursor: pointer;
-            border: none;
-            border-radius: 6px;
-            background: var(--primary-color);
-            color: white;
-            width: 100%;
-            font-weight: bold;
-            font-size: 16px;
-            margin-top: 5px;
-        }
-
-        button.btn-secondary {
-            padding: 12px 20px;
-            cursor: pointer;
-            border: none;
-            border-radius: 6px;
-            background: #95a5a6;
-            color: white;
-            width: 100%;
-            margin-top: 10px;
-        }
-
-        /* --- Admin Panel --- */
-        .admin-box {
-            width: 550px;
-            max-height: 85vh;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .winner-list-container {
-            margin-top: 15px;
-            border-top: 2px solid #eee;
-            padding-top: 10px;
-            flex: 1;
-            overflow-y: auto;
-            text-align: left;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 14px;
-        }
-
-        th,
-        td {
-            border-bottom: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
-        }
-
-        th {
-            background: #f8f9fa;
-            color: #333;
-            position: sticky;
-            top: 0;
-        }
-
-        .input-row {
-            display: flex;
-            gap: 10px;
         }
 
         /* --- Game Area --- */
@@ -239,41 +121,116 @@
             flex: 1;
             width: 100%;
             height: 100%;
+            overflow: hidden;
         }
 
         .ticket-item {
+            /* Kích thước mặc định cho PC */
             position: absolute;
-            width: 100px;
-            height: 120px;
-            background: linear-gradient(135deg, #e74c3c, #c0392b);
-            border: 2px solid #fff;
-            border-radius: 12px;
+            width: 90px;
+            height: 110px;
+            background: linear-gradient(135deg, #c0392b, #e74c3c);
+            border: 2px solid #f1c40f;
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
             z-index: 10;
+            transition: transform 0.1s;
+            /* Mượt hơn */
         }
 
         .ticket-item::after {
             content: '🧧';
-            font-size: 3rem;
+            font-size: 2.5rem;
         }
 
-        /* --- Scratch Modal --- */
+        /* Hiệu ứng hover chỉ áp dụng trên PC (có chuột) */
+        @media (hover: hover) {
+            .ticket-item:hover {
+                transform: scale(1.1);
+                z-index: 100;
+            }
+        }
+
+        /* --- Modal Chung --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .box {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            width: 100%;
+            max-width: 320px;
+            /* Responsive box */
+            text-align: center;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.4);
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        .btn-primary,
+        .btn-secondary {
+            padding: 12px;
+            width: 100%;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            margin-top: 5px;
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: #95a5a6;
+            color: white;
+            margin-top: 10px;
+        }
+
+        /* --- Modal Cào --- */
         #scratch-modal {
             flex-direction: column;
         }
 
         .scratch-card-container {
             position: relative;
-            width: 320px;
-            height: 180px;
+            width: 300px;
+            height: 160px;
+            /* Kích thước chuẩn */
+            max-width: 90vw;
+            /* Không bao giờ vượt quá 90% chiều rộng màn hình */
             background: white;
             border-radius: 15px;
             overflow: hidden;
-            box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
             margin-bottom: 20px;
         }
 
@@ -287,20 +244,22 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            background: radial-gradient(circle, #fff, #f0f0f0);
+            background: radial-gradient(circle, #fff, #ecf0f1);
+            text-align: center;
+            padding: 10px;
         }
 
         .prize-amount {
             font-size: 32px;
             font-weight: bold;
             color: #c0392b;
+            margin-bottom: 5px;
         }
 
         .prize-wish {
-            font-size: 18px;
+            font-size: 16px;
             color: #333;
             font-style: italic;
-            margin-top: 5px;
         }
 
         canvas {
@@ -309,6 +268,57 @@
             left: 0;
             touch-action: none;
         }
+
+        /* Admin Panel */
+        .admin-box {
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .winner-list {
+            max-height: 200px;
+            overflow-y: auto;
+            text-align: left;
+            margin-top: 10px;
+            border-top: 1px solid #eee;
+        }
+
+        .winner-item {
+            padding: 5px 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* =========================================
+           RESPONSIVE: MOBILE & TABLET (Dưới 768px)
+           ========================================= */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.1rem;
+            }
+
+            /* Thu nhỏ bao lì xì trên điện thoại */
+            .ticket-item {
+                width: 60px;
+                height: 80px;
+            }
+
+            .ticket-item::after {
+                font-size: 1.8rem;
+                /* Thu nhỏ icon bao lì xì */
+            }
+
+            .scratch-card-container {
+                height: 150px;
+                /* Giảm chiều cao thẻ cào một chút */
+            }
+
+            .start-btn {
+                padding: 12px 30px;
+                font-size: 18px;
+            }
+        }
     </style>
 </head>
 
@@ -316,17 +326,17 @@
 
     <audio id="bg-music" loop>
         <source src="tba.mp3" type="audio/mpeg">
-        Trình duyệt của bạn không hỗ trợ audio.
     </audio>
 
     <div id="welcome-overlay">
-        <h1 style="font-size: 3rem; margin-bottom: 10px;">🧧 XUÂN LỘC PHÁT 🧧</h1>
-        <p>Sẵn sàng thử vận may đầu năm chưa?</p>
-        <button class="start-btn" onclick="enterGame()">BẮT ĐẦU NGAY</button>
+        <h1 style="font-size: 2rem; color: var(--gold); margin-bottom: 5px;">🧧 XUÂN 2025 🧧</h1>
+        <p style="font-size: 1rem; opacity: 0.8;">Chạm để bốc thăm may mắn</p>
+        <button class="start-btn" onclick="startGame()">BẮT ĐẦU</button>
+        <p style="margin-top: 20px; font-size: 0.8rem; color: #bdc3c7;">(Lưu ý: Mỗi thiết bị 1 lượt)</p>
     </div>
 
     <header>
-        <h1 style="color: black;">🧧 Lộc Vàng Đầu Năm 🧧</h1>
+        <h1>🧧 Lộc Vàng Đầu Năm 🧧</h1>
         <button id="music-toggle" onclick="toggleMusic()">🔊</button>
     </header>
 
@@ -334,16 +344,17 @@
 
     <div id="name-input-modal" class="modal-overlay">
         <div class="box">
-            <h3 style="color: var(--primary-color)">Xin chào!</h3>
-            <p>Nhập tên để nhận lộc:</p>
-            <input type="text" id="player-name" placeholder="Tên của bạn..." autocomplete="off">
+            <h3 style="color: var(--primary-color)">🧧 Nhận Lộc</h3>
+            <p>Nhập tên của bạn:</p>
+            <input type="text" id="player-name" placeholder="Ví dụ: Minh Tuấn..." autocomplete="off">
             <button class="btn-primary" onclick="submitName()">Xác Nhận</button>
-            <button class="btn-secondary" onclick="closeNameModal()">Hủy</button>
+            <button class="btn-secondary" onclick="closeNameModal()">Để sau</button>
         </div>
     </div>
 
     <div id="scratch-modal" class="modal-overlay">
-        <h2 style="color: white; margin-bottom: 15px">Cào nhẹ tay - Nhận ngay lộc!</h2>
+        <h2 style="color: var(--gold); font-size: 1.2rem; text-shadow: 0 2px 4px #000;">✨ Cào Nhẹ Tay - Vận May Tới ✨
+        </h2>
         <div class="scratch-card-container" id="card-container">
             <div class="card-content">
                 <div class="prize-amount" id="reveal-amount">---</div>
@@ -351,108 +362,125 @@
             </div>
             <canvas id="scratch-canvas"></canvas>
         </div>
-        <button class="btn-primary" id="btn-claim" style="width: 200px; display: none;"
-            onclick="closeScratchModal()">Nhận Lộc</button>
+        <button class="btn-primary" id="btn-claim" style="width: 200px; display: none; background: #27ae60;"
+            onclick="closeScratchModal()">Nhận Thưởng</button>
+        <p style="color: white; margin-top: 10px; font-size: 12px; opacity: 0.8;">Chụp màn hình lại để gửi cho Admin
+            nhé!</p>
     </div>
 
-    <div id="login-modal" class="modal-overlay">
+    <div id="admin-login-modal" class="modal-overlay">
         <div class="box">
-            <h3>Đăng nhập Admin</h3>
+            <h3>🔒 Admin Login</h3>
             <input type="text" id="login-user" placeholder="Username">
             <input type="password" id="login-pass" placeholder="Password">
             <button class="btn-primary" onclick="checkLogin()">Đăng Nhập</button>
             <button class="btn-secondary"
-                onclick="document.getElementById('login-modal').style.display='none'">Đóng</button>
+                onclick="document.getElementById('admin-login-modal').style.display='none'">Đóng</button>
         </div>
     </div>
 
-    <div id="admin-modal" class="modal-overlay">
+    <div id="admin-dashboard-modal" class="modal-overlay">
         <div class="box admin-box">
-            <h3 style="color: var(--primary-color)">Quản Lý Vé</h3>
-            <div class="input-row">
-                <input type="text" id="input-amount" placeholder="Số tiền (VD: 50k)" style="flex:2">
-                <input type="number" id="input-qty" value="1" min="1" placeholder="SL"
-                    style="flex:1; text-align:center">
-            </div>
-            <input type="text" id="input-wish" placeholder="Lời chúc">
-            <button class="btn-primary" onclick="createTicket()">+ Tạo Vé</button>
+            <h3>Admin Panel</h3>
+            <p style="font-size:13px; color:red">Người trúng trên máy này:</p>
+            <div class="winner-list" id="local-winner-list"></div>
 
-            <div class="winner-list-container">
-                <h4>Danh sách trúng thưởng:</h4>
-                <table id="winner-table">
-                    <thead>
-                        <tr>
-                            <th>Tên</th>
-                            <th>Giải thưởng</th>
-                        </tr>
-                    </thead>
-                    <tbody id="winner-tbody"></tbody>
-                </table>
-            </div>
+            <button class="btn-secondary" style="background: #e74c3c; margin-top: 20px;" onclick="resetMyDevice()">
+                Reset Máy Này
+            </button>
 
-            <div style="display:flex; gap:10px; margin-top:15px">
-                <button class="btn-secondary" onclick="clearTickets()" style="background:#e67e22">Reset</button>
-                <button class="btn-secondary" onclick="closeAdmin()">Thoát</button>
-            </div>
+            <button class="btn-secondary"
+                onclick="document.getElementById('admin-dashboard-modal').style.display='none'">Thoát</button>
         </div>
     </div>
 
     <script>
-        // --- 0. AUDIO MANAGER ---
-        const bgMusic = document.getElementById('bg-music');
-        const musicBtn = document.getElementById('music-toggle');
+        // --- 1. DỮ LIỆU CỨNG ---
+        const HARDCODED_TICKETS = [
+            { id: 1, amount: "100k", wish: "Khai xuân phát lộc!" },
+            { id: 2, amount: "10k", wish: "Tiền lẻ cũng là tiền!" },
+            { id: 3, amount: "20k", wish: "Lộc ít lòng nhiều" },
+            { id: 4, amount: "50k", wish: "Tiền vào như nước" },
+            { id: 5, amount: "500k", wish: "Giải Đặc Biệt! Chúc Mừng!" },
+            { id: 6, amount: "20k", wish: "May mắn cả năm" },
+            { id: 7, amount: "10k", wish: "Vạn sự như ý" },
+            { id: 8, amount: "20k", wish: "Lì xì vui vẻ nè!" },
+            { id: 9, amount: "50k", wish: "Sớm có người yêu" },
+            { id: 10, amount: "20k", wish: "Ăn mau chóng lớn" },
+            { id: 11, amount: "10k", wish: "Vui vẻ là chính" },
+            { id: 12, amount: "200k", wish: "Năm mới đại thắng!" },
+            { id: 13, amount: "20k", wish: "Tấn tài tấn lộc" },
+            { id: 14, amount: "10k", wish: "Cung hỷ phát tài" },
+            { id: 15, amount: "50k", wish: "Tiền đầy túi, tim đầy tình" },
+            { id: 16, amount: "10k", wish: "Năm mới bình an" },
+            { id: 17, amount: "20k", wish: "Học hành tấn tới" },
+            { id: 18, amount: "100k", wish: "Lộc lá đầy nhà" },
+            { id: 19, amount: "10k", wish: "Cười nhiều mỗi ngày" },
+            { id: 20, amount: "20k", wish: "Sức khỏe dồi dào" },
+            { id: 21, amount: "10k", wish: "Thành công rực rỡ" },
+            { id: 22, amount: "10k", wish: "Chúc mừng năm mới" },
+            { id: 23, amount: "200k", wish: "Giải Nhì! Quá đã!" },
+            { id: 24, amount: "20k", wish: "An khang thịnh vượng" },
+            { id: 25, amount: "10k", wish: "Vui như Tết" },
+            { id: 26, amount: "20k", wish: "Công việc thuận lợi" },
+            { id: 27, amount: "20k", wish: "Gia đình hạnh phúc" },
+            { id: 28, amount: "10k", wish: "Mọi điều suôn sẻ" },
+            { id: 29, amount: "20k", wish: "Phát tài phát lộc" },
+            { id: 30, amount: "10k", wish: "Xuân sang vui vẻ" }
+        ];
 
-        function enterGame() {
-            document.getElementById('welcome-overlay').style.display = 'none';
-            // Phát nhạc ngay khi có tương tác đầu tiên
-            bgMusic.play().catch(error => {
-                console.log("Autoplay bị chặn, cần tương tác thêm: " + error);
-            });
+        // --- 2. KHỞI TẠO DỮ LIỆU ---
+        let tickets = [];
+        const savedData = localStorage.getItem('tickets_v2');
+        if (savedData) {
+            tickets = JSON.parse(savedData);
+        } else {
+            tickets = HARDCODED_TICKETS.map(t => ({ ...t, scratched: false, winnerName: "" }));
+            saveData();
         }
 
-        function toggleMusic() {
-            if (bgMusic.paused) {
-                bgMusic.play();
-                musicBtn.innerText = '🔊';
+        // --- 3. CONFIG RESPONSIVE ---
+        // Biến này sẽ được cập nhật dựa trên kích thước màn hình
+        let TICKET_W = 90;
+        let TICKET_H = 110;
+
+        function updateDimensions() {
+            if (window.innerWidth <= 768) {
+                TICKET_W = 60; // Mobile width
+                TICKET_H = 80; // Mobile height
             } else {
-                bgMusic.pause();
-                musicBtn.innerText = '🔇';
+                TICKET_W = 90; // Desktop width
+                TICKET_H = 110; // Desktop height
             }
         }
 
-        // --- DATA & CONFIG ---
-        let tickets = JSON.parse(localStorage.getItem('tickets')) || [];
+        // --- 4. LOGIC CHÍNH ---
         let flyingTickets = [];
         let animationFrameId;
         const gameArea = document.getElementById('game-area');
-        let tempActiveTicket = null;
-        let tempActiveElement = null;
-        let currentPlayerName = "";
+        let tempTicket = null, tempElement = null, currentPlayer = "";
 
-        // --- 1. HOTKEYS & LOGIN ---
-        document.addEventListener('keydown', (e) => {
-            if (e.ctrlKey && e.altKey && e.key.toLowerCase() === 'q') {
-                document.getElementById('login-modal').style.display = 'flex';
-                document.getElementById('login-user').focus();
-            }
-        });
+        function saveData() { localStorage.setItem('tickets_v2', JSON.stringify(tickets)); }
 
-        function checkLogin() {
-            const u = document.getElementById('login-user').value;
-            const p = document.getElementById('login-pass').value;
-            if (u === 'admin' && p === '12345') {
-                document.getElementById('login-modal').style.display = 'none';
-                openAdminPanel();
-                document.getElementById('login-user').value = '';
-                document.getElementById('login-pass').value = '';
-            } else { alert('Sai thông tin!'); }
+        function startGame() {
+            document.getElementById('welcome-overlay').style.display = 'none';
+            document.getElementById('bg-music').play().catch(e => console.log("Cần tương tác"));
+            initPhysics();
         }
 
-        // --- 2. GAME LOGIC ---
-        function onTicketClick(ticketData, element) {
-            if (ticketData.scratched) return;
-            tempActiveTicket = ticketData;
-            tempActiveElement = element;
+        function toggleMusic() {
+            const m = document.getElementById('bg-music');
+            const b = document.getElementById('music-toggle');
+            if (m.paused) { m.play(); b.innerText = '🔊'; } else { m.pause(); b.innerText = '🔇'; }
+        }
+
+        function onTicketClick(ticket, el) {
+            if (localStorage.getItem('da_nhan_qua_v2') === 'true') {
+                alert("Bạn đã nhận lì xì rồi! 🧧"); return;
+            }
+            if (ticket.scratched) { alert("Vé này đã bị cào rồi!"); return; }
+
+            tempTicket = ticket; tempElement = el;
             document.getElementById('player-name').value = "";
             document.getElementById('name-input-modal').style.display = 'flex';
             document.getElementById('player-name').focus();
@@ -461,138 +489,125 @@
         function submitName() {
             const name = document.getElementById('player-name').value.trim();
             if (!name) return alert("Vui lòng nhập tên!");
-            currentPlayerName = name;
+            currentPlayer = name;
             document.getElementById('name-input-modal').style.display = 'none';
-            openScratchModal();
+            openScratchBoard();
         }
+        function closeNameModal() { document.getElementById('name-input-modal').style.display = 'none'; tempTicket = null; }
 
-        function closeNameModal() {
-            document.getElementById('name-input-modal').style.display = 'none';
-            tempActiveTicket = null; tempActiveElement = null;
-        }
-
-        // Canvas Scratch
+        // Logic Cào
         const canvas = document.getElementById('scratch-canvas');
         const ctx = canvas.getContext('2d', { willReadFrequently: true });
-        let isDrawing = false, isRevealed = false;
+        let isDrawing = false, isDone = false;
 
-        function openScratchModal() {
-            document.getElementById('reveal-amount').innerText = tempActiveTicket.amount;
-            document.getElementById('reveal-wish').innerText = tempActiveTicket.wish;
+        function openScratchBoard() {
             const modal = document.getElementById('scratch-modal');
-            modal.style.display = 'flex';
-            document.getElementById('btn-claim').style.display = 'none';
-            isRevealed = false;
+            const container = document.getElementById('card-container');
 
-            const w = document.getElementById('card-container').offsetWidth;
-            const h = document.getElementById('card-container').offsetHeight;
-            canvas.width = w; canvas.height = h;
+            document.getElementById('reveal-amount').innerText = tempTicket.amount;
+            document.getElementById('reveal-wish').innerText = tempTicket.wish;
+            document.getElementById('btn-claim').style.display = 'none';
+
+            modal.style.display = 'flex';
+            isDone = false;
+
+            // Setup Canvas khớp với container (responsive)
+            canvas.width = container.offsetWidth;
+            canvas.height = container.offsetHeight;
 
             ctx.globalCompositeOperation = 'source-over';
-            ctx.fillStyle = '#bdc3c7'; ctx.fillRect(0, 0, w, h);
-            ctx.font = "bold 20px Arial"; ctx.fillStyle = "#7f8c8d"; ctx.textAlign = "center";
-            ctx.fillText("👋 " + currentPlayerName.toUpperCase(), w / 2, h / 2 - 15);
-            ctx.fillText("CÀO Ở ĐÂY", w / 2, h / 2 + 15);
+            ctx.fillStyle = '#bdc3c7'; ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.font = "bold 18px Arial"; ctx.fillStyle = "#7f8c8d"; ctx.textAlign = "center";
+            ctx.fillText("👋 " + currentPlayer, canvas.width / 2, canvas.height / 2 - 15);
+            ctx.fillText("Cào lớp bạc này đi!", canvas.width / 2, canvas.height / 2 + 15);
             ctx.globalCompositeOperation = 'destination-out';
         }
 
         function scratch(e) {
-            if (!isDrawing || isRevealed) return;
+            if (!isDrawing || isDone) return;
             const rect = canvas.getBoundingClientRect();
-            let x = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
-            let y = (e.touches ? e.touches[0].clientY : e.clientY) - rect.top;
-            ctx.beginPath(); ctx.arc(x, y, 25, 0, Math.PI * 2); ctx.fill();
+            let clientX = e.touches ? e.touches[0].clientX : e.clientX;
+            let clientY = e.touches ? e.touches[0].clientY : e.clientY;
+            ctx.beginPath();
+            ctx.arc(clientX - rect.left, clientY - rect.top, 20, 0, Math.PI * 2);
+            ctx.fill();
 
-            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            // Check percent
+            const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
             let clear = 0;
-            for (let i = 3; i < imageData.data.length; i += 40) if (imageData.data[i] === 0) clear++;
-            if (clear / (imageData.data.length / 40) > 0.4) finishScratch();
+            for (let i = 3; i < imgData.data.length; i += 40) if (imgData.data[i] === 0) clear++;
+            if (clear / (imgData.data.length / 40) > 0.4) finishScratch();
         }
-
-        ['mousedown', 'touchstart'].forEach(evt => canvas.addEventListener(evt, (e) => { isDrawing = true; scratch(e); }));
-        ['mousemove', 'touchmove'].forEach(evt => canvas.addEventListener(evt, scratch));
-        ['mouseup', 'touchend'].forEach(evt => canvas.addEventListener(evt, () => isDrawing = false));
+        ['mousedown', 'touchstart'].forEach(ev => canvas.addEventListener(ev, (e) => { isDrawing = true; scratch(e); }));
+        ['mousemove', 'touchmove'].forEach(ev => canvas.addEventListener(ev, scratch));
+        ['mouseup', 'touchend'].forEach(ev => canvas.addEventListener(ev, () => isDrawing = false));
 
         function finishScratch() {
-            isRevealed = true;
+            isDone = true;
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             fireworks();
             document.getElementById('btn-claim').style.display = 'block';
-
-            const idx = tickets.findIndex(t => t.id === tempActiveTicket.id);
+            const idx = tickets.findIndex(t => t.id === tempTicket.id);
             if (idx > -1) {
-                tickets[idx].scratched = true;
-                tickets[idx].winnerName = currentPlayerName;
-                saveTickets();
+                tickets[idx].scratched = true; tickets[idx].winnerName = currentPlayer;
+                saveData(); localStorage.setItem('da_nhan_qua_v2', 'true');
             }
         }
-
         function closeScratchModal() {
             document.getElementById('scratch-modal').style.display = 'none';
-            if (tempActiveElement) {
-                tempActiveElement.remove();
-                flyingTickets = flyingTickets.filter(t => t.element !== tempActiveElement);
-            }
+            if (tempElement) { tempElement.remove(); flyingTickets = flyingTickets.filter(t => t.el !== tempElement); }
         }
 
-        // --- 3. ADMIN ---
-        function openAdminPanel() { document.getElementById('admin-modal').style.display = 'flex'; renderWinnerList(); }
-        function closeAdmin() { document.getElementById('admin-modal').style.display = 'none'; }
-
-        function createTicket() {
-            const amt = document.getElementById('input-amount').value;
-            const wsh = document.getElementById('input-wish').value;
-            const qty = parseInt(document.getElementById('input-qty').value) || 1;
-            if (!amt) return alert("Chưa nhập số tiền!");
-
-            for (let i = 0; i < qty; i++) {
-                const newT = { id: Date.now() + i, amount: amt, wish: wsh || "Vạn sự như ý", scratched: false, winnerName: "" };
-                tickets.push(newT); spawnTicket(newT);
-            }
-            saveTickets();
-            alert(`Đã tạo ${qty} vé!`);
-            document.getElementById('input-qty').value = 1;
-        }
-
-        function clearTickets() {
-            if (confirm("Xóa hết?")) { tickets = []; saveTickets(); initGame(); renderWinnerList(); }
-        }
-
-        function renderWinnerList() {
-            const tbody = document.getElementById('winner-tbody'); tbody.innerHTML = '';
-            const winners = tickets.filter(t => t.scratched);
-            if (winners.length === 0) tbody.innerHTML = '<tr><td colspan="2" style="text-align:center">Trống</td></tr>';
-            else winners.forEach(t => {
-                tbody.innerHTML += `<tr><td>${t.winnerName}</td><td style="color:red">${t.amount}</td></tr>`;
-            });
-        }
-        function saveTickets() { localStorage.setItem('tickets', JSON.stringify(tickets)); }
-
-        // --- 4. PHYSICS ---
-        function initGame() {
-            gameArea.innerHTML = ''; flyingTickets = [];
+        // --- 5. HỆ THỐNG BAY (ĐÃ UPDATE RESPONSIVE) ---
+        function initPhysics() {
+            updateDimensions(); // Cập nhật kích thước bao lì xì
+            gameArea.innerHTML = '';
+            flyingTickets = [];
             tickets.forEach(t => { if (!t.scratched) spawnTicket(t); });
             if (!animationFrameId) animate();
         }
 
         function spawnTicket(t) {
-            const el = document.createElement('div'); el.className = 'ticket-item';
-            const mx = gameArea.clientWidth - 100, my = gameArea.clientHeight - 120;
-            let x = Math.random() * mx, y = Math.random() * my;
-            let dx = (Math.random() - 0.5) * 3 || 1, dy = (Math.random() - 0.5) * 3 || 1;
-            el.style.left = x + 'px'; el.style.top = y + 'px';
-            el.onclick = () => onTicketClick(t, el);
+            const el = document.createElement('div');
+            el.className = 'ticket-item';
+
+            // Dùng TICKET_W và TICKET_H động
+            const maxX = gameArea.clientWidth - TICKET_W;
+            const maxY = gameArea.clientHeight - TICKET_H;
+
+            let x = Math.random() * maxX;
+            let y = Math.random() * maxY;
+            let dx = (Math.random() - 0.5) * 2; // Giảm tốc độ trên mobile cho dễ bấm
+            let dy = (Math.random() - 0.5) * 2;
+            if (Math.abs(dx) < 0.3) dx = 0.5;
+
+            el.style.left = x + 'px';
+            el.style.top = y + 'px';
+            // Cần sự kiện touchstart cho mobile để nhạy hơn onclick
+            el.addEventListener('click', () => onTicketClick(t, el));
+            el.addEventListener('touchstart', () => onTicketClick(t, el));
+
             gameArea.appendChild(el);
-            flyingTickets.push({ element: el, x, y, dx, dy });
+            flyingTickets.push({ el, x, y, dx, dy });
         }
 
         function animate() {
-            const mx = gameArea.clientWidth - 100, my = gameArea.clientHeight - 120;
-            flyingTickets.forEach(o => {
-                o.x += o.dx; o.y += o.dy;
-                if (o.x <= 0 || o.x >= mx) o.dx *= -1;
-                if (o.y <= 0 || o.y >= my) o.dy *= -1;
-                o.element.style.left = o.x + 'px'; o.element.style.top = o.y + 'px';
+            const maxX = gameArea.clientWidth - TICKET_W;
+            const maxY = gameArea.clientHeight - TICKET_H;
+
+            flyingTickets.forEach(obj => {
+                obj.x += obj.dx;
+                obj.y += obj.dy;
+                if (obj.x <= 0 || obj.x >= maxX) obj.dx *= -1;
+                if (obj.y <= 0 || obj.y >= maxY) obj.dy *= -1;
+
+                // Giữ bao lì xì trong khung nếu resize cửa sổ
+                obj.x = Math.max(0, Math.min(obj.x, maxX));
+                obj.y = Math.max(0, Math.min(obj.y, maxY));
+
+                obj.el.style.left = obj.x + 'px';
+                obj.el.style.top = obj.y + 'px';
             });
             animationFrameId = requestAnimationFrame(animate);
         }
@@ -600,14 +615,55 @@
         function fireworks() {
             const end = Date.now() + 2000;
             (function frame() {
-                confetti({ particleCount: 3, angle: 60, spread: 55, origin: { x: 0 } });
-                confetti({ particleCount: 3, angle: 120, spread: 55, origin: { x: 1 } });
+                confetti({ particleCount: 5, angle: 60, spread: 55, origin: { x: 0 } });
+                confetti({ particleCount: 5, angle: 120, spread: 55, origin: { x: 1 } });
                 if (Date.now() < end) requestAnimationFrame(frame);
             }());
         }
 
-        window.addEventListener('resize', initGame);
-        initGame();
+        // --- 6. ADMIN ---
+        document.addEventListener('keydown', (e) => {
+            if (e.ctrlKey && e.altKey && e.key.toLowerCase() === 'q') {
+                document.getElementById('admin-login-modal').style.display = 'flex';
+                document.getElementById('login-user').focus();
+            }
+        });
+
+        function checkLogin() {
+            const u = document.getElementById('login-user').value;
+            const p = document.getElementById('login-pass').value;
+            if (u === 'admin' && p === '12345') {
+                document.getElementById('admin-login-modal').style.display = 'none';
+                showAdminDashboard();
+                document.getElementById('login-user').value = '';
+                document.getElementById('login-pass').value = '';
+            } else { alert('Sai thông tin!'); }
+        }
+
+        function showAdminDashboard() {
+            const listDiv = document.getElementById('local-winner-list');
+            listDiv.innerHTML = '';
+            const winners = tickets.filter(t => t.scratched);
+            if (winners.length === 0) listDiv.innerHTML = '<p>Chưa có ai trúng trên máy này.</p>';
+            else {
+                winners.forEach(w => {
+                    listDiv.innerHTML += `<div class="winner-item"><b>${w.winnerName}</b><span style="color:red">${w.amount}</span></div>`;
+                });
+            }
+            document.getElementById('admin-dashboard-modal').style.display = 'flex';
+        }
+
+        function resetMyDevice() {
+            if (confirm("Xóa lịch sử để chơi lại?")) {
+                localStorage.removeItem('tickets_v2');
+                localStorage.removeItem('da_nhan_qua_v2');
+                location.reload();
+            }
+        }
+
+        // Khi xoay màn hình hoặc đổi kích thước -> tính toán lại
+        window.addEventListener('resize', initPhysics);
+
     </script>
 </body>
 
